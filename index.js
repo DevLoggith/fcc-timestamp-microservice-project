@@ -26,7 +26,19 @@ app.get("/api/hello", function (req, res) {
 
 
 app.get("/api/:date", (req, res) => {
+  // returns a JSON object of {"unix": "<unix_timestamp>", "utc": "<utc_timestamp>"}
+
+  // if :date === <unix_timestamp>
+    // dateObj.unix = :date
+    // dateObj.utc = new Date(:date).toUTCString()
   
+  // if :date === <utc_timestamp>
+    // dateObj.unix = new Date(:date).getTime()
+    // dateObj.utc = :date
+
+  // if :date === none/undefined
+    // dateObj.unix = Date.now()
+    // dateObj.utc = Date()
 });
 
 
