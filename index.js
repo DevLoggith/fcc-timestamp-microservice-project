@@ -26,32 +26,24 @@ app.get("/api/hello", function (req, res) {
 
 
 app.get("/api/:date?", (req, res) => {
+  const timestamp = {unix: null, utc: null};
   // returns a JSON object of {"unix": "<unix_timestamp>", "utc": "<utc_timestamp>"}
   // or {error: "Invalid Date"}
+  if (!req.params.date) {
+    timestamp.unix = Date.now();
+    timestamp.utc = Date();
+    res.json(timestamp);
 
-  // if :date === <unix_timestamp>
-    // dateObj.unix = :date
-    // dateObj.utc = new Date(:date).toUTCString()
-  
-  // if :date === <utc_timestamp>
-    // dateObj.unix = new Date(:date).getTime()
-    // dateObj.utc = :date
-
-  // if :date === none/undefined
-    // dateObj.unix = Date.now()
-    // dateObj.utc = Date()
-
-  const timestamp = {unix: null, utc: null};
-
-  if (/-/g.test(req.params.date)) {
+} else if (/-/g.test(req.params.date)) {
     timestamp.unix = new Date(req.params.date).getTime();
     timestamp.utc = new Date(req.params.date).toUTCString();
     res.json(timestamp);
-  } else {
+
+} else {
     timestamp.unix = Number(req.params.date);
     timestamp.utc = new Date(timestamp.unix).toUTCString();
     res.json(timestamp);
-  }
+}
 });
 
 
