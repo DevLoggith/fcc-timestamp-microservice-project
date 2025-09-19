@@ -18,7 +18,7 @@ app.get("/", function (req, res) {
 	res.sendFile(__dirname + "/views/index.html");
 });
 
-
+// TODO: create a route specific middleware to validate date inputs outside of route
 app.get("/api/:date?", (req, res) => {
 	const timestamp = { unix: null, utc: null };
 
@@ -27,22 +27,21 @@ app.get("/api/:date?", (req, res) => {
 		timestamp.utc = Date();
 
 	} else if (req.params.date.includes("-")) {
+		if (isNaN(parseInt(req.params.date))) {
+			res.json({error: "Invalid Date"});
+			return;
+		}
 		timestamp.unix = new Date(req.params.date).getTime();
 		timestamp.utc = new Date(req.params.date).toUTCString();
 
-	} else if (!req.params.date.includes("-")) {
-
-		if (isNaN(parseInt(req.params.date))) {
-			res.json({error: "Invalid Date"})
-
-		} else {
-			timestamp.unix = parseInt(req.params.date);
-			timestamp.utc = new Date(timestamp.unix).toUTCString();
-		}
-		
 	} else {
-        res.json({ error: "Invalid Date" });
-    }
+		if (isNaN(parseInt(req.params.date))) {
+			res.json({error: "Invalid Date"});
+			return;
+		}
+		timestamp.unix = parseInt(req.params.date);
+		timestamp.utc = new Date(timestamp.unix).toUTCString();
+	}
 	res.json(timestamp);
 });
 
