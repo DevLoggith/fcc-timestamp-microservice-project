@@ -30,7 +30,7 @@ app.get("/api/:date?", (req, res) => {
 			res.json({ error: "Invalid Date" });
 			return;
 		}
-		timestamp.unix = parseInt(req.params.date);
+		timestamp.unix = +req.params.date;
 		timestamp.utc = new Date(timestamp.unix).toUTCString();
 		
 	} else {
