@@ -24,7 +24,8 @@ app.get("/api/:date?", (req, res) => {
 	if (!req.params.date) {
 		timestamp.unix = Date.now();
 		timestamp.utc = Date();
-
+		
+		// regex to assert only digits
 	} else if (/^\d+$/g.test(req.params.date)) {
 		if (isNaN(new Date(+req.params.date))) {
 			res.json({ error: "Invalid Date" });
