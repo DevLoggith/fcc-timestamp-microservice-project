@@ -16,11 +16,11 @@ Built using Node.js and Express I implemented a RESTful API endpoint that option
 
 ## Usage
 ### Endpoints
-```json
+```
 GET /api/:date?
 ```
 ### Examples
-```json
+```
 GET /api/2015-12-25
 → { "unix": 1451001600000, "utc": "Fri, 25 Dec 2015 00:00:00 GMT" }
 
